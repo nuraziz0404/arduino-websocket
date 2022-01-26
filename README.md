@@ -1,4 +1,4 @@
-<img src="https://komarev.com/ghpvc/?username=nuraziz0404&label=visitor&color=0e75b6&style=flat" alt="nuraziz0404" />
+![](https://komarev.com/ghpvc/?username=nuraziz0404&label=VISITOR)
 
 # Jemuran Otomatis
 
