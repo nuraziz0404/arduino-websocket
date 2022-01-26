@@ -42,7 +42,9 @@
       // if (!id) alert("mana id nya?\nketik http://" + location.host + "?id=<id jemuran>")
       if (!id) id = prompt("please input the id")
 
-      const ws = new WebSocket(`${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`);
+      const wsHost = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`
+      console.log("connecting ws: "+wsHost)
+      const ws = new WebSocket(wsHost);
       const v = document.getElementById('val');
 
       console.log("starting jemuran otomatis")

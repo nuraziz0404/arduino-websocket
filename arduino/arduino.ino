@@ -14,7 +14,7 @@ int state = 0;
 // #define server "192.168.43.126" 
 // #define port 8010
 #define server "jemuran-otomatis.vinz2k21.repl.co" 
-#define port 80
+#define port 443
 
 void handler(String cmd)
 {
@@ -83,7 +83,8 @@ void setup()
 	Serial.println(WiFi.localIP());
 
 	// server address, port and URL
-	webSocket.begin(server, port, "/");
+	// webSocket.begin(server, port);
+	webSocket.beginSSL(server, port);
 
 	// event handler
 	webSocket.onEvent(webSocketEvent);
