@@ -11,8 +11,10 @@ int state = 0;
 #define id 1304
 #define SSID "Az"
 #define PASS ""
-#define server "192.168.43.126" 
-#define port 8010
+// #define server "192.168.43.126" 
+// #define port 8010
+#define server "jemuran-otomatis.vinz2k21.repl.co" 
+#define port 80
 
 void handler(String cmd)
 {

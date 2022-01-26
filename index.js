@@ -13,6 +13,10 @@ const wss = new WebSocket.Server({ server });
 var servers = {}
 var clients = {}
 
+app.get("/conn", function(req, res){
+  res.json({servers: Object.keys(servers), clients: Object.keys(clients)})
+})
+
 wss.on("connection", function (ws) {
   let _id = ""
   let type = ""
