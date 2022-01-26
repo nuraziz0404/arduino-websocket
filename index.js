@@ -71,5 +71,5 @@ wss.on("connection", function (ws) {
 });
 
 server.listen(80, '0.0.0.0', function () {
-  console.log('Listening on http://localhost:8010');
+  console.log('Listening on http://localhost');
 });
