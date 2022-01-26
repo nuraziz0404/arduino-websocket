@@ -1,4 +1,4 @@
-![](https://komarev.com/ghpvc/?username=nuraziz0404&label=VISITOR)
+<!-- ![](https://komarev.com/ghpvc/?username=nuraziz0404&label=VISITOR) -->
 
 # Jemuran Otomatis
 
