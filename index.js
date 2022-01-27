@@ -18,17 +18,6 @@ app.get("/conn", function (req, res) {
 })
 
 wss.on("connection", function (ws) {
-  let _id = ""
-  let type = ""
-  ws.on('close', function () {
-    if (type == "server") {
-      console.log('Server Disconected: ' + _id);
-      delete servers[_id]
-    }
-    else {
-      console.log("Client disconected: " + _id)
-      delete clients[_id]
-    }
   });
   ws.on("message", (data, bin) => {
     let dat = data.toString()
@@ -37,8 +26,6 @@ wss.on("connection", function (ws) {
     let id = args[1]
     let command = args[2]
     let msg = args.slice(3)?.join(" ")
-    _id = id
-    type = side
 
     let serverList = Object.keys(servers)
     let clientList = Object.keys(clients)
@@ -57,6 +44,16 @@ wss.on("connection", function (ws) {
           else {
             console.log("client connected: " + id)
             clients[id] = ws
+            ws.on('close', function () {
+              if (type == "server") {
+                console.log('Server Disconected: ' + id);
+                delete servers[id]
+              }
+              else {
+                console.log("Client disconected: " + id)
+                delete clients[id]
+              }
+            });
           }
         }
         break;
