@@ -44,7 +44,7 @@ wss.on("connection", function (ws) {
             console.log("client connected: " + id)
             clients[id] = ws
             ws.on('close', function () {
-              if (type == "server") {
+              if (side == "server") {
                 console.log('Server Disconected: ' + id);
                 delete servers[id]
               }
