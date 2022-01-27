@@ -18,7 +18,6 @@ app.get("/conn", function (req, res) {
 })
 
 wss.on("connection", function (ws) {
-  });
   ws.on("message", (data, bin) => {
     let dat = data.toString()
     let args = dat.split(" ")
