@@ -13,8 +13,8 @@ const wss = new WebSocket.Server({ server });
 var servers = {}
 var clients = {}
 
-app.get("/conn", function(req, res){
-  res.json({servers: Object.keys(servers), clients: Object.keys(clients)})
+app.get("/conn", function (req, res) {
+  res.json({ servers: Object.keys(servers), clients: Object.keys(clients) })
 })
 
 wss.on("connection", function (ws) {
@@ -22,11 +22,11 @@ wss.on("connection", function (ws) {
   let type = ""
   ws.on('close', function () {
     if (type == "server") {
-      console.log('Server Disconected: '+_id);
+      console.log('Server Disconected: ' + _id);
       delete servers[_id]
     }
     else {
-      console.log("Client disconected: "+_id)
+      console.log("Client disconected: " + _id)
       delete clients[_id]
     }
   });
@@ -50,8 +50,14 @@ wss.on("connection", function (ws) {
           servers[id] = ws
         }
         else {
-          console.log("client connected: " + id)
-          clients[id] = ws
+          if (clientList.includes(id)) {
+            ws.send("exists")
+            ws.close()
+          }
+          else {
+            console.log("client connected: " + id)
+            clients[id] = ws
+          }
         }
         break;
       case "send":
@@ -70,6 +76,6 @@ wss.on("connection", function (ws) {
   })
 });
 
-server.listen(80, '0.0.0.0', function () {
+server.listen(8019, '0.0.0.0', function () {
   console.log('Listening on http://localhost');
 });

@@ -58,7 +58,10 @@
 
       ws.onmessage = function (event) {
          let msg = event.data
-         v.textContent = msg
+         if(msg == "exists") {
+            ws.close()
+            alert("wes ono sing nganggo su")
+         } else v.textContent = msg
       };
       function jemur() {
          ws.send(`client ${id} send jemur`)
