@@ -32,29 +32,34 @@ wss.on("connection", function (ws) {
     switch (command) {
       case "set":
         if (side == "server") {
-          console.log("sever connected: " + id)
-          servers[id] = ws
+          if (serverList.includes(id)) {
+            ws.send("exists")
+            return ws.close()
+          } else {
+            console.log("sever connected: " + id)
+            servers[id] = ws
+          }
         }
         else {
           if (clientList.includes(id)) {
             ws.send("exists")
-            ws.close()
+            return ws.close()
           }
           else {
             console.log("client connected: " + id)
             clients[id] = ws
-            ws.on('close', function () {
-              if (side == "server") {
-                console.log('Server Disconected: ' + id);
-                delete servers[id]
-              }
-              else {
-                console.log("Client disconected: " + id)
-                delete clients[id]
-              }
-            });
           }
         }
+        ws.on('close', function () {
+          if (side == "server") {
+            console.log('Server Disconected: ' + id);
+            delete servers[id]
+          }
+          else {
+            console.log("Client disconected: " + id)
+            delete clients[id]
+          }
+        });
         break;
       case "send":
         if (side == "server") {

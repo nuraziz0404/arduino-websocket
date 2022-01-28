@@ -26,6 +26,10 @@ void handler(String cmd)
 	{
 		state = 0;
 	}
+	else if(cmd == "exists") {
+		Serial.println("server exists, standby until restart");
+		while (1){}
+	}
 }
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
 {
