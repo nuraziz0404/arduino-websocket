@@ -43,6 +43,7 @@ wss.on("connection", function (ws) {
             ws.PingInt = setInterval(() => {
               let pongOffset = Math.round(process.uptime() - ws.lastPong)
               if (pongOffset > 3) {
+                console.log(`Server: ${id} | Last connection: ${pongOffset}s ago`)
                 clearInterval(ws.PingInt)
                 ws.close()
                 console.log('Server Disconected: ' + id);
