@@ -55,11 +55,6 @@ wss.on("connection", function (ws) {
             ws.on("pong", function (data) {
               ws.lastPong = process.uptime()
             })
-
-            ws.on('close', function () {
-              console.log('Server Disconected: ' + id);
-              delete servers[id]
-            });
           }
         }
         else {
@@ -72,6 +67,7 @@ wss.on("connection", function (ws) {
             clients[id] = ws
             ws.on('close', function () {
               console.log('Client Disconected: ' + id);
+              if (ws?.PingInt) clearInterval(ws.PingInt)
               delete clients[id]
             });
           }
