@@ -9,7 +9,7 @@ WebSocketsClient webSocket;
 int state = 0;
 
 #define id 1304
-#define SSID "Az"
+#define SSID "Aziz"
 #define PASS ""
 // #define server "192.168.43.126" 
 // #define port 80
