@@ -19,7 +19,7 @@
 </head>
 
 <body>
-   <div class="container bg-secondary py-2 rounded mt-3" style="max-width: 500px;">
+   <div class="container bg-secondary py-2 rounded mt-3" style="min-width: 50%; max-width: 70%;">
       <div class="card text-white bg-secondary" id="main" style="display: none;">
          <div class="card-header d-flex justify-content-center">
             <h1>Jemuran Otomatis</h1>
@@ -57,7 +57,7 @@
             ws.send(`client ${id} set`)
             clearInterval(x)
             document.getElementById("loading").style.display = "none"
-            document.getElementById("main").style.display = "block"
+            document.getElementById("main").style.display = "flex"
          }
       }, 100);
 
