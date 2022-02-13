@@ -2,10 +2,12 @@
   "name": "bot-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "nodemon -e ts -w . -x ts-node index.ts",
+    "start": "node .",
+    "ts:build": "tsc",
+    "clean": "tsc --build --clean"
   },
   "keywords": [],
   "author": "",

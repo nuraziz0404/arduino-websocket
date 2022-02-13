@@ -80,11 +80,19 @@
             alert("sabar, gek ono sing ngakses")
             window.location = "_blank"
          }
-         else if (msg == "no_server") {
+         else if (msg == "no_server" || msg == "error") {
             document.getElementById("loading").style.display = "flex"
             document.getElementById("main").style.display = "none"
             ws.close()
+            console.log(msg)
             alert("perangkat tidak ditemukan / sedang offline")
+         }
+         else if (msg.startsWith("offline")) {
+            document.getElementById("loading").style.display = "flex"
+            document.getElementById("main").style.display = "none"
+            ws.close()
+            x = msg.split(" ")
+            alert(`perangkat tidak aktif / tidak terhubung ke server\nkondisi terakhit: ${x[1]} | Cuaca terakhir: ${x[2]}`)
          }
          else if (msg.startsWith("cuaca")) {
             c.textContent = msg.replace("cuaca ", "")

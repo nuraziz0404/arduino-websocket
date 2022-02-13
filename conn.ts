@@ -26,7 +26,8 @@ export function updateState(id: string, state: string) {
     })
     .onConflict("id")
     .merge()
-    .then((e) => {});
+    .then((e) => {})
+    .catch(console.log)
 }
 export function updateWeather(id: string, weather: string) {
   conn("state")
@@ -36,5 +37,17 @@ export function updateWeather(id: string, weather: string) {
     })
     .onConflict("id")
     .merge()
-    .then((e) => {});
+    .then((e) => {})
+    .catch(console.log)
+}
+
+export function cekState(id:string):Promise<Array<{id:string; state:string; weather:string}>|"err">{
+  return new Promise(resolve=>{
+    conn("state").where("id", "=", id)
+    .then(resolve)
+    .catch(e=>{
+      console.log(e)
+      resolve("err")
+    })
+  })
 }
