@@ -63,7 +63,9 @@
 
       ws.onmessage = function (event) {
          let msg = event.data
-         if(msg == "exists") {
+         if (msg == "exists") {
+            document.getElementById("loading").style.display = "flex"
+            document.getElementById("main").style.display = "none"
             ws.close()
             alert("sabar, gek ono sing ngakses")
          } else v.textContent = msg
