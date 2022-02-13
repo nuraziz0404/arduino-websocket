@@ -41,7 +41,8 @@ wss.on("connection", function (ws) {
             ws.lastPong = process.uptime()
 
             ws.PingInt = setInterval(() => {
-              console.log(Math.round(process.uptime() - ws.lastPong))
+              let pongOffset = Math.round(process.uptime() - ws.lastPong)
+              console.log(`${pongOffset} | ${pongOffset > 3}`)
               ws.ping("ping", true, function(){})
             }, 1000);
 
