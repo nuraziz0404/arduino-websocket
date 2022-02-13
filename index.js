@@ -38,6 +38,11 @@ wss.on("connection", function (ws) {
           } else {
             console.log("sever connected: " + id)
             servers[id] = ws
+
+            ws.on('close', function () {
+              console.log('Server Disconected: ' + id);
+              delete servers[id]
+            });
           }
         }
         else {
@@ -48,18 +53,12 @@ wss.on("connection", function (ws) {
           else {
             console.log("client connected: " + id)
             clients[id] = ws
+            ws.on('close', function () {
+              console.log('Client Disconected: ' + id);
+              delete clients[id]
+            });
           }
         }
-        ws.on('close', function () {
-          if (side == "server") {
-            console.log('Server Disconected: ' + id);
-            delete servers[id]
-          }
-          else {
-            console.log("Client disconected: " + id)
-            delete clients[id]
-          }
-        });
         break;
       case "send":
         if (side == "server") {

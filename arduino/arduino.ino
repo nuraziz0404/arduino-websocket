@@ -28,7 +28,7 @@ void handler(String cmd)
 	}
 	else if(cmd == "exists") {
 		Serial.println("server exists, standby until restart");
-		while (1){}
+		while (1);
 	}
 }
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
@@ -100,11 +100,14 @@ void setup()
 
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, 1);
+ pinMode(D0, OUTPUT);
+  digitalWrite(D0, 0);
 }
 
 void loop()
 {
 	digitalWrite(LED_BUILTIN, !state);
+  digitalWrite(D0, state);
 	webSocket.loop();
 	webSocket.sendTXT(("server "+String(id)+" send "+ (state ? "DIJEMUR" : "NGEYUP")).c_str());
 }
