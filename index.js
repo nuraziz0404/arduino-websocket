@@ -38,6 +38,7 @@ wss.on("connection", function (ws) {
           } else {
             console.log("sever connected: " + id)
             servers[id] = ws
+            servers[id].lastPong = process.uptime()
 
             ws.on('close', function () {
               console.log('Server Disconected: ' + id);
