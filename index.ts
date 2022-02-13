@@ -12,6 +12,7 @@ const wss = new WebSocket.Server({ server });
 
 var servers = {};
 var clients = {};
+var lastState = {};
 
 app.get("/conn", function (req, res) {
   res.json({ servers: Object.keys(servers), clients: Object.keys(clients) });
@@ -81,7 +82,7 @@ wss.on("connection", function (ws) {
         break;
       case "send":
         if (side == "server") {
-          servers[id]["state"] = msg;
+          lastState[id]["state"] = msg;
           if (clientList.includes(id)) clients[id].send(msg);
         } else {
           if (serverList.includes(id)) servers[id].send(msg);
@@ -92,7 +93,7 @@ wss.on("connection", function (ws) {
         }
         break;
       case "cuaca":
-        servers[id]["weather"] = msg;
+        lastState[id]["weather"] = msg;
         if (clientList.includes(id)) clients[id].send("cuaca " + msg);
         break;
     }
@@ -100,9 +101,9 @@ wss.on("connection", function (ws) {
 });
 
 setInterval(() => {
-  for (let id in servers) {
-    db.updateState(id, servers[id]["state"]);
-    db.updateWeather(id, servers[id]["weather"]);
+  for (let id in lastState) {
+    db.updateState(id, lastState[id]["state"]);
+    db.updateWeather(id, lastState[id]["weather"]);
   }
 }, 5000);
 

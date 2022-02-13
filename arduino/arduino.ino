@@ -15,10 +15,10 @@ int command;
 #define id 1304
 #define SSID "Aziz"
 #define PASS ""
-#define server "192.168.43.126"
-#define port 8019
-// #define server "47.250.52.121"
+// #define server "192.168.43.126"
 // #define port 8019
+#define server "jemuran01.herokuapp.com"
+#define port 80
 
 void handler(String cmd)
 {
