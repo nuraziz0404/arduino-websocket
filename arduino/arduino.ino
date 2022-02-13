@@ -6,29 +6,40 @@
 
 WebSocketsClient webSocket;
 
+int sensorPin = D0;
 int state = 0;
+int matic = 1;
+int sensor;
+int command;
 
 #define id 1304
 #define SSID "Aziz"
 #define PASS ""
-// #define server "192.168.43.126" 
-// #define port 80
-#define server "47.250.52.121" 
+#define server "192.168.43.126"
 #define port 8019
+// #define server "47.250.52.121"
+// #define port 8019
 
 void handler(String cmd)
 {
 	if (cmd == "jemur")
 	{
-		state = 1;
+		command = 1;
+		matic = 0;
 	}
 	else if (cmd == "teduh")
 	{
-		state = 0;
+		command = 0;
+		matic = 0;
 	}
-	else if(cmd == "exists") {
+	else if (cmd == "matic")
+	{
+		matic = 1;
+	}
+	else if (cmd == "exists")
+	{
 		Serial.println("server exists, standby until restart");
-		while (1);
+		webSocket.disconnect();
 	}
 }
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
@@ -40,12 +51,10 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
 		Serial.printf("[WSc] Disconnected!\n");
 		break;
 	case WStype_CONNECTED:
-	{
 		Serial.printf("[WSc] Connected to url: %s\n", payload);
 		// send message to server when Connected
-		webSocket.sendTXT(("server "+String(id)+" set").c_str());
-	}
-	break;
+		webSocket.sendTXT(("server " + String(id) + " set").c_str());
+		break;
 	case WStype_TEXT:
 		// Serial.printf("[WSc] get text: %s\n", payload);
 		// sx = "Dari arduino: ";
@@ -56,9 +65,9 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
 		// send message to server
 		// webSocket.sendTXT("message here");
 		break;
-		 case WStype_PING:
+		//		 case WStype_PING:
 		// 	// pong will be send automatically
-		 	Serial.printf("[WSc] get ping\n");
+		//		 	Serial.printf("[WSc] get ping\n");
 		// 	break;
 		// case WStype_PONG:
 		// 	// answer to a ping we send
@@ -72,7 +81,7 @@ void setup()
 	// Serial.begin(921600);
 	Serial.begin(115200);
 	delay(10);
-	//Serial.setDebugOutput(true);
+	// Serial.setDebugOutput(true);
 	Serial.println();
 
 	WiFi.begin(SSID, PASS);
@@ -99,15 +108,40 @@ void setup()
 	webSocket.enableHeartbeat(15000, 3000, 2);
 
 	pinMode(LED_BUILTIN, OUTPUT);
-	digitalWrite(LED_BUILTIN, 1);
- pinMode(D0, OUTPUT);
-  digitalWrite(D0, 0);
+	pinMode(sensorPin, INPUT);
+
+	sensor = digitalRead(sensorPin);
+	state = sensor;
+	digitalWrite(LED_BUILTIN, !state);
 }
 
 void loop()
 {
-	digitalWrite(LED_BUILTIN, !state);
-  digitalWrite(D0, state);
 	webSocket.loop();
-	webSocket.sendTXT(("server "+String(id)+" send "+ (state ? "DIJEMUR" : "NGEYUP")).c_str());
+	sensor = digitalRead(sensorPin);
+	int wsStatus = webSocket.isConnected();
+	if (wsStatus) {
+		if (!sensor){
+			state = sensor;
+		}
+		else {
+			if (matic) {
+				state = sensor;
+				// delay(1000);
+			}
+			else {
+				state = command;
+			}
+		}
+		webSocket.sendTXT(("server " + String(id) + " send " + (state ? "DIJEMUR" : "NGEYUP")).c_str());
+		webSocket.sendTXT(("server " + String(id) + " cuaca " + (sensor ? "cerah" : "hujan")).c_str());
+	}
+	else {
+		// delay(1000);
+		matic = 1;
+		state = sensor;
+	}
+
+	// Serial.println("mode: " + String(matic ? "matic" : "manual"));
+	digitalWrite(LED_BUILTIN, !state);
 }

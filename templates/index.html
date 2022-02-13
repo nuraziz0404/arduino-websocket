@@ -29,9 +29,15 @@
             &nbsp;
             <h1 id="val"></h1>
          </div>
+         <div class="card-body d-flex justify-content-center">
+            <h1>CUACA:</h1>
+            &nbsp;
+            <h1 id="c"></h1>
+         </div>
          <div class="card-body d-flex justify-content-between d-flex mx-auto">
             <button class="btn btn-primary mx-2" onclick="jemur()" id="jemurBtn">JEMUR</button>
             <button class="btn btn-danger mx-2" onclick="teduh()" id="teduhBtn">TEDUHKAN</button>
+            <button class="btn btn-success mx-2" onclick="matic()">Otomatis</button>
          </div>
       </div>
       <div class="card text-white bg-secondary justify-content-center" id="loading" style="display: flex;">
@@ -50,6 +56,7 @@
       console.log("connecting ws: " + wsHost)
       const ws = new WebSocket(wsHost);
       const v = document.getElementById('val');
+      const c = document.getElementById('c');
       const jemurBtn = $("#jemurBtn")
       const teduhBtn = $("#teduhBtn")
 
@@ -71,13 +78,17 @@
             document.getElementById("main").style.display = "none"
             ws.close()
             alert("sabar, gek ono sing ngakses")
-         } else if (msg == "no_server") {
+            window.location = "_blank"
+         }
+         else if (msg == "no_server") {
             document.getElementById("loading").style.display = "flex"
             document.getElementById("main").style.display = "none"
             ws.close()
-            window.location = "?id=" + prompt("Perangkat tidak terhubung\npastikan anda telah memasukkan id yang benar")
+            alert("perangkat tidak ditemukan / sedang offline")
          }
-         else {
+         else if (msg.startsWith("cuaca")) {
+            c.textContent = msg.replace("cuaca ", "")
+         } else {
             v.textContent = msg
             if (msg.toLowerCase() == "dijemur") {
                jemurBtn.prop("disabled", true)
@@ -93,6 +104,9 @@
       }
       function teduh() {
          ws.send(`client ${id} send teduh`)
+      }
+      function matic() {
+         ws.send(`client ${id} send matic`)
       }
    </script>
 </body>
