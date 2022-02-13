@@ -45,7 +45,8 @@ wss.on("connection", function (ws) {
             });
 
             setInterval(() => {
-              console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
+              // console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
+              ws.ping("halo", false, console.error)
             }, 1000);
           }
         }
