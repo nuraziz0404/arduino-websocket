@@ -44,10 +44,10 @@ wss.on("connection", function (ws) {
               delete servers[id]
             });
 
-            servers[id].pingInt = setInterval(() => {
+            let pingInt = setInterval(() => {
               // console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
-              if ((process.uptime() - servers[id].lastPong||process.uptime()) > 5) {
-                clearInterval(servers[id].pingInt)
+              if ((process.uptime() - servers[id].lastPong) > 5) {
+                clearInterval(pingInt)
                 ws.close()
                 delete servers[id]
                 console.log('Server Disconected: ' + id);
