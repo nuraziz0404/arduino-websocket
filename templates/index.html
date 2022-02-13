@@ -30,14 +30,15 @@
             <h1 id="val"></h1>
          </div>
          <div class="card-body d-flex justify-content-between d-flex mx-auto">
-            <button class="btn btn-primary mx-2" onclick="jemur()">JEMUR</button>
-            <button class="btn btn-danger mx-2" onclick="teduh()">TEDUHKAN</button>
+            <button class="btn btn-primary mx-2" onclick="jemur()" id="jemurBtn">JEMUR</button>
+            <button class="btn btn-danger mx-2" onclick="teduh()" id="teduhBtn">TEDUHKAN</button>
          </div>
       </div>
       <div class="card text-white bg-secondary justify-content-center" id="loading" style="display: flex;">
          <h1 style="margin: auto;">CONNECTING</h1>
       </div>
    </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script>
 
       const urlParams = new URLSearchParams(window.location.search);
@@ -49,6 +50,8 @@
       console.log("connecting ws: " + wsHost)
       const ws = new WebSocket(wsHost);
       const v = document.getElementById('val');
+      const jemurBtn = $("#jemurBtn")
+      const teduhBtn = $("#teduhBtn")
 
       console.log("starting jemuran otomatis")
 
@@ -68,7 +71,16 @@
             document.getElementById("main").style.display = "none"
             ws.close()
             alert("sabar, gek ono sing ngakses")
-         } else v.textContent = msg
+         } else {
+            v.textContent = msg
+            if (msg.toLowerCase() == "dijemur") {
+               jemurBtn.prop("disabled") = true
+               teduhBtn.prop("disabled") = false
+            } else {
+               jemurBtn.prop("disabled") = false
+               teduhBtn.prop("disabled") = true
+            }
+         }
       };
       function jemur() {
          ws.send(`client ${id} send jemur`)

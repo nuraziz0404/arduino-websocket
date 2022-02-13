@@ -89,6 +89,6 @@ wss.on("connection", function (ws) {
   })
 });
 
-server.listen(8019, '0.0.0.0', function () {
-  console.log('Listening on http://localhost');
+let listener = server.listen(8019, '0.0.0.0', function () {
+  console.log(`Listening on http://localhost:${listener.address().port}`);
 });
