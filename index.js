@@ -50,6 +50,7 @@ wss.on("connection", function (ws) {
                 clearInterval(servers[id].pingInt)
                 ws.close()
                 delete servers[id]
+                console.log('Server Disconected: ' + id);
               } else {
                 ws.ping("ping", true, function (err) { })
               }
