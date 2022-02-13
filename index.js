@@ -46,10 +46,12 @@ wss.on("connection", function (ws) {
 
             setInterval(() => {
               // console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
-              ws.ping("ping", true, function(err){
-                console.log(err)
-              })
+              ws.ping("ping", true, function(err){})
             }, 1000);
+            ws.on("pong", function(data){
+              console.log(data.toString() + " | " + String(process.uptime()))
+              servers[id].pong = process.uptime()
+            })
           }
         }
         else {

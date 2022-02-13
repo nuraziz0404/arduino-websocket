@@ -56,9 +56,9 @@ void webSocketEvent(WStype_t type, uint8_t *payload, size_t length)
 		// send message to server
 		// webSocket.sendTXT("message here");
 		break;
-		// case WStype_PING:
+		 case WStype_PING:
 		// 	// pong will be send automatically
-		// 	Serial.printf("[WSc] get ping\n");
+		 	Serial.printf("[WSc] get ping\n");
 		// 	break;
 		// case WStype_PONG:
 		// 	// answer to a ping we send
