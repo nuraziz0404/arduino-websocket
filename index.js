@@ -43,10 +43,10 @@ wss.on("connection", function (ws) {
               console.log('Server Disconected: ' + id);
               delete servers[id]
             });
-            ws.on('error', function () {
-              console.log('Server Disconected: ' + id);
-              delete servers[id]
-            });
+
+            setInterval(() => {
+              console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
+            }, 1000);
           }
         }
         else {
