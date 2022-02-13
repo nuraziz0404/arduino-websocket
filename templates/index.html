@@ -75,7 +75,7 @@
             document.getElementById("loading").style.display = "flex"
             document.getElementById("main").style.display = "none"
             ws.close()
-            alert("perangkat tidak terhubung")
+            window.location = "?id=" + prompt("Perangkat tidak terhubung\npastikan anda telah memasukkan id yang benar")
          }
          else {
             v.textContent = msg
