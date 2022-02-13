@@ -74,11 +74,11 @@
          } else {
             v.textContent = msg
             if (msg.toLowerCase() == "dijemur") {
-               jemurBtn.prop("disabled") = true
-               teduhBtn.prop("disabled") = false
+               jemurBtn.prop("disabled", true)
+               teduhBtn.prop("disabled", false)
             } else {
-               jemurBtn.prop("disabled") = false
-               teduhBtn.prop("disabled") = true
+               jemurBtn.prop("disabled", false)
+               teduhBtn.prop("disabled", true)
             }
          }
       };
