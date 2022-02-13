@@ -41,7 +41,7 @@ wss.on("connection", function (ws) {
             ws.lastPong = process.uptime()
 
             ws.PingInt = setInterval(() => {
-              console.log(process.uptime() - ws.lastPong).toFixed(2)
+              console.log((process.uptime() - ws.lastPong).toFixed(2))
               ws.ping("ping", true, function(){})
             }, 1000);
 
