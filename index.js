@@ -61,6 +61,9 @@ wss.on("connection", function (ws) {
           if (clientList.includes(id)) {
             ws.send("exists")
             return ws.close()
+          } else if(!serverList.includes(id)){
+            ws.send("no_server")
+            ws.close()
           }
           else {
             console.log("client connected: " + id)

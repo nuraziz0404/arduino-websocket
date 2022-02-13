@@ -71,7 +71,13 @@
             document.getElementById("main").style.display = "none"
             ws.close()
             alert("sabar, gek ono sing ngakses")
-         } else {
+         } else if (msg == "no_server") {
+            document.getElementById("loading").style.display = "flex"
+            document.getElementById("main").style.display = "none"
+            ws.close()
+            alert("perangkat tidak terhubung")
+         }
+         else {
             v.textContent = msg
             if (msg.toLowerCase() == "dijemur") {
                jemurBtn.prop("disabled", true)
