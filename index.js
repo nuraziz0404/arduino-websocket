@@ -50,11 +50,11 @@ wss.on("connection", function (ws) {
                 clearInterval(servers[id].pingInt)
                 ws.close()
                 delete servers[id]
+              } else {
+                ws.ping("ping", true, function (err) { })
               }
-              ws.ping("ping", true, function (err) { })
             }, 1000);
             ws.on("pong", function (data) {
-              console.log(data.toString() + " | " + String(process.uptime()))
               servers[id].pong = process.uptime()
             })
           }
