@@ -47,7 +47,7 @@ wss.on("connection", function (ws) {
 
             let pingInt = setInterval(() => {
               // console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
-              if ((process.uptime() - servers[id].lastPong) > 5) {
+              if (servers[id]) if ((process.uptime() - servers[id].lastPong) > 5) {
                 clearInterval(pingInt)
                 ws.close()
                 delete servers[id]
