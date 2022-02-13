@@ -38,27 +38,21 @@ wss.on("connection", function (ws) {
           } else {
             console.log("sever connected: " + id)
             servers[id] = ws
-            servers[id].lastPong = process.uptime()
+            ws.lastPong = process.uptime()
+
+            ws.PingInt = setInterval(() => {
+              console.log(process.uptime() - ws.lastPong).toFixed(2)
+              ws.ping("ping", true, function(){})
+            }, 1000);
+
+            ws.on("pong", function(data){
+              ws.lastPong = process.uptime()
+            })
 
             ws.on('close', function () {
               console.log('Server Disconected: ' + id);
               delete servers[id]
             });
-
-            let pingInt = setInterval(() => {
-              // console.log(`id: ${id} | ${ws.OPEN ? "CONNECTED" : "DC"}`)
-              if (servers[id]) if ((process.uptime() - servers[id].lastPong) > 5) {
-                clearInterval(pingInt)
-                ws.close()
-                delete servers[id]
-                console.log('Server Disconected: ' + id);
-              } else {
-                ws.ping("ping", true, function (err) { })
-              }
-            }, 1000);
-            ws.on("pong", function (data) {
-              servers[id].lastPong = process.uptime()
-            })
           }
         }
         else {
